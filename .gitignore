@@ -1,0 +1,4 @@
+dist/
+.air.toml
+tmp/
+.DS_Store
