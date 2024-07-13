@@ -7,7 +7,6 @@ import (
 	"image/png"
 	"log/slog"
 	"net/http"
-	"os/exec"
 
 	"github.com/DillonEnge/keizai-launcher/internal/fonts"
 	"github.com/DillonEnge/keizai-launcher/internal/game"
@@ -117,13 +116,7 @@ func main() {
 				return err
 			}
 
-			exeName, err := sio.GetExecutableName(path, g)
-			if err != nil {
-				return err
-			}
-
-			cmd := exec.Command(path + g.Name + ".app/Contents/MacOS/" + *exeName)
-			if err := cmd.Start(); err != nil {
+			if err = sio.ExecuteGame(path, g); err != nil {
 				return err
 			}
 		case button.STATE_INSTALL:
