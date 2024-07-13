@@ -1,3 +1,5 @@
+//go:build windows
+
 package sysio
 
 import (
@@ -21,12 +23,13 @@ type Adapter interface {
 	CheckLatest(client *github.Client, g requests.Game) (bool, error)
 	GetVersion(appPath string, g requests.Game) (*string, error)
 	GetExecutableName(appPath string, g requests.Game) (*string, error)
+	ExecuteGame(appPath string, g requests.Game) error
 }
 
 func NewSysio() (Adapter, error) {
 	switch runtime.GOOS {
-	case "darwin":
-		return &DarwinAdapter{}, nil
+	case "windows":
+		return &WindowsAdapter{}, nil
 	default:
 		return nil, ErrUnsupportedSystem
 	}

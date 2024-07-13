@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/user"
 	"runtime"
 	"slices"
@@ -185,4 +186,18 @@ func (d *DarwinAdapter) GetExecutableName(appPath string, g requests.Game) (*str
 	}
 
 	return &info.CFBundleExecutable, nil
+}
+
+func (d *DarwinAdapter) ExecuteGame(appPath string, g requests.Game) error {
+	exeName, err := d.GetExecutableName(appPath, g)
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.Command(appPath + g.Name + ".app/Contents/MacOS/" + *exeName)
+	if err := cmd.Start(); err != nil {
+		return err
+	}
+
+	return nil
 }
