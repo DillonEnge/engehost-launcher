@@ -2,7 +2,7 @@ run:
 	@go run cmd/main.go
 
 build_darwin:
-	@go build -tags 'darwin' -o dist/darwin/Engehost\ Launcher.app/Contents/MacOS/engehost_launcher cmd/main.go
+	@go build -tags 'darwin' -o dist/darwin/arm64/engehost-launcher/Engehost\ Launcher.app/Contents/MacOS/engehost_launcher cmd/main.go
 
 build_win:
 	@go-winres simply --icon assets/icon.png --file-version git-tag --admin
